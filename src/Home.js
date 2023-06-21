@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const [registrations, setRegistrations] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 3;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     fetchRegistrations();
@@ -16,7 +16,7 @@ const Home = () => {
   const fetchRegistrations = async () => {
     try {
       const response = await axios.get(
-        "https://0msv0-crispy-space-orbit-4vpp59w6x6q2794r-3001.preview.app.github.dev/api/registrations"
+        "https://f23nd6-3001.csb.app/api/get-user-list"
       );
       setRegistrations(response.data);
     } catch (error) {
@@ -76,63 +76,77 @@ const Home = () => {
 
   return (
     <div className="container">
-      <h1>Welcome to the Home Page</h1>
-      <p>Click the link below to register:</p>
-      <Link to="/register" className="btn btn-primary">
-        Register
-      </Link>
-
-      <Link to="/all-register" className="btn btn-primary">
-        List All Of Registers
-      </Link>
-      <h1 className="text-center mt-4">Registrations</h1>
-      <table
-        className="table table-bordered table-striped"
-        {...getTableProps()}
-      >
-        <thead className="thead-dark">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+      <div className="header d-flex justify-content-between align-items-center">
+        <h1 className="title" style={{ color: "red" }}>
+          Home Page
+        </h1>
+        <div className="button-group">
+          <Link to="/signup" className="btn btn-danger mx-3">
+            SignUp
+          </Link>
+          <Link to="/search-user" className="btn btn-primary">
+            Search
+          </Link>
+        </div>
+      </div>
+      <div className="registrations d-flex flex-column align-items-center">
+        <h2 className="section-title">Users List</h2>
+        <div className="table-container" style={{ width: "100%" }}>
+          <table
+            className="table table-bordered table-striped"
+            style={{ width: "100%", borderCollapse: "collapse" }}
+            {...getTableProps()}
+          >
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()}>
+                      {column.render("Header")}
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <ReactPaginate
-        previousLabel="Previous"
-        nextLabel="Next"
-        breakLabel="..."
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName="pagination justify-content-center mt-3"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        activeClassName="active"
-      />
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row, i) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} key={i}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="pagination-container d-flex justify-content-center">
+        <ReactPaginate
+          previousLabel="Previous"
+          nextLabel="Next"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageChange}
+          containerClassName="pagination justify-content-center mt-3"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          activeClassName="active"
+        />
+      </div>
     </div>
   );
 };

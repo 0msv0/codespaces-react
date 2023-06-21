@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { useTable, usePagination } from "react-table";
+import { Link } from "react-router-dom";
 
 const RegistrationSearch = () => {
   const [registrations, setRegistrations] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 3;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     fetchRegistrations();
@@ -21,7 +22,7 @@ const RegistrationSearch = () => {
   const fetchRegistrations = async () => {
     try {
       const response = await axios.get(
-        `https://0msv0-crispy-space-orbit-4vpp59w6x6q2794r-3001.preview.app.github.dev/api/registrations?search=${searchQuery}`
+        `https://f23nd6-3001.csb.app/api/get-user-list/?search=${searchQuery}`
       );
       setRegistrations(response.data);
     } catch (error) {
@@ -66,7 +67,7 @@ const RegistrationSearch = () => {
       {
         Header: "Address",
         accessor: "address",
-      }
+      },
     ],
     []
   );
@@ -85,15 +86,26 @@ const RegistrationSearch = () => {
 
   return (
     <div className="container">
-      <h1 className="text-center mt-4">Registration Search</h1>
+      <div className="header d-flex justify-content-between align-items-center">
+        <h1 className="title" style={{ color: "red" }}>
+          Search User
+        </h1>
+        <div className="button-group">
+          <Link to="/" className="btn btn-primary">
+            Go Back
+          </Link>
+        </div>
+      </div>
       <div className="form-group">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
+        <div className="mt-3 mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+        </div>
       </div>
       <table
         className="table table-bordered table-striped"

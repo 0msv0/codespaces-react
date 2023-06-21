@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import RegisterForm from "./RegisterForm";
+import SignUpForm from "./SignUpForm";
 import Home from "./Home";
-import RegistrationSearch from "./RegisterationSearch";
+import UsersSrearch from "./UsersSrearch";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/all-register" element={<RegistrationSearch />} />
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/search-user" element={<UsersSrearch />} />
       </Routes>
     </BrowserRouter>
   );
